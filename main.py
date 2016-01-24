@@ -102,8 +102,8 @@ def main():
                             writesrtfile.append((writesrttime, writesrttextCN, writesrttextPY))
                             print(writesrttextCN, " → ", writesrttextPY)
                             writesrttime = False
-                            writesrttextCN = False
-                            writesrttextPY = False
+                            writesrttextCN = ""
+                            writesrttextPY = ""
                             
                         
                         #check for timestamp
@@ -111,7 +111,9 @@ def main():
                             writesrttime = line.rstrip('\n')
                         
                         elif line.rstrip('\n') != "":
-                            writesrttextCN = re.sub('{.*?}', '', line.rstrip('\n')) 
+                            if writesrttextCN != "":
+                                writesrttextCN += "\n"
+                            writesrttextCN += re.sub('{.*?}', '', line.rstrip('\n')) 
                             writesrttextPY = ""
                             #writesrttextCN = "一人得道，雞犬升天"
                             #print(writesrttextCN)
@@ -127,6 +129,8 @@ def main():
                                     try:
                                         if teststr in punctuation:  
                                             break #punctuation so break and let if statement catch.
+                                        elif teststr == "\n":
+                                            break
                                         else:
                                             for row in dbcur.execute("SELECT * FROM dict WHERE trad = '%s'" % teststr):
                                                 writesrttextPY = writesrttextPY + " " + re.sub(',.*$', '', re.sub('.*?:', '', decode_pinyin(row[2])))
