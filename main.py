@@ -139,7 +139,7 @@ def main():
                                         teststr = teststr[:-1] #shrink the teststring
         
                                     except:
-                                        pass 
+                                        break 
                                 if rowvalid == False:
                                     writesrttextPY = writesrttextPY + teststr
                                 
@@ -162,6 +162,7 @@ def main():
                         writefile.write("\n")
                         writefile.write(entry[2])
                         writefile.write("\n\n")
+                dec = input("Done. Press Enter to Finish")
     except:
         print("An error has occured. You should check which files are being updated in this set \n")
         raise
