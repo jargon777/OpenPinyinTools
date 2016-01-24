@@ -17,6 +17,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+Pinyin tone marker function comes from:
+https://stackoverflow.com/questions/8200349/convert-numbered-pinyin-to-pinyin-with-tone-marks 
+
 @author: Matthew Muresan
 '''
 
@@ -99,8 +102,8 @@ def main():
                             writesrtfile.append((writesrttime, writesrttextCN, writesrttextPY))
                             print(writesrttextCN, " → ", writesrttextPY)
                             writesrttime = False
-                            writesrttextCN = False
-                            writesrttextPY = False
+                            writesrttextCN = ""
+                            writesrttextPY = ""
                             
                         
                         #check for timestamp
@@ -108,13 +111,10 @@ def main():
                             writesrttime = line.rstrip('\n')
                         
                         elif line.rstrip('\n') != "":
-                            writesrttextCN = re.sub('{.*?}', '', line.rstrip('\n')) 
+                            if writesrttextCN != "":
+                                writesrttextCN += "\n"
+                            writesrttextCN += re.sub('{.*?}', '', line.rstrip('\n')) 
                             writesrttextPY = ""
-                            #writesrttextCN = "一人得道，雞犬升天"
-                            #print(writesrttextCN)
-                            #print(writesrttextCN[:-1])
-                            #print(writesrttextCN[1:])
-                            #dec = input("STOP")
                             
                             basestr = writesrttextCN
                             while(len(basestr) > 0):
@@ -124,6 +124,8 @@ def main():
                                     try:
                                         if teststr in punctuation:  
                                             break #punctuation so break and let if statement catch.
+                                        elif teststr == "\n":
+                                            break
                                         else:
                                             for row in dbcur.execute("SELECT * FROM dict WHERE trad = '%s'" % teststr):
                                                 writesrttextPY = writesrttextPY + " " + re.sub(',.*$', '', re.sub('.*?:', '', decode_pinyin(row[2])))
