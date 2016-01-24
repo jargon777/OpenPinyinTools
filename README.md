@@ -5,3 +5,5 @@ At the moment this is a very basic program. SRT files in /parse are automaticall
 
 If you are interested in the script but it is too basic for you, let me know and maybe I can build an exe for it.
 muresan.matthew@gmail.com
+
+Consider checking https://github.com/jargon777/OpenPinyinTools/tree/dev for the latest version.
