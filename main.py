@@ -115,11 +115,6 @@ def main():
                                 writesrttextCN += "\n"
                             writesrttextCN += re.sub('{.*?}', '', line.rstrip('\n')) 
                             writesrttextPY = ""
-                            #writesrttextCN = "一人得道，雞犬升天"
-                            #print(writesrttextCN)
-                            #print(writesrttextCN[:-1])
-                            #print(writesrttextCN[1:])
-                            #dec = input("STOP")
                             
                             basestr = writesrttextCN
                             while(len(basestr) > 0):
