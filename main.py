@@ -17,6 +17,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+Pinyin tone marker function comes from:
+https://stackoverflow.com/questions/8200349/convert-numbered-pinyin-to-pinyin-with-tone-marks 
+
 @author: Matthew Muresan
 '''
 
