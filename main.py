@@ -88,6 +88,9 @@ def main():
     enchmo = 2 #2 keeps only pinyin
     chmode = "simp"
     #chmode = "trad"
+    tranCN = True #translate from simp->trad or vice versa
+    TCNSCN = 0 if chmode=="simp" else 1 #table offset
+    
     
     try:
         for i in os.listdir(parsedir):
@@ -96,6 +99,7 @@ def main():
                 writesrtln = ("00:00:00,500 --> 00:00:10,500", "PinYin Added with OpenPinyinTools")
                 writesrttime = "00:00:00,500 --> 00:00:10,500"
                 writesrttextCN = "拼音"
+                writesrttextOC = "拼音"
                 writesrttextPY = "Pinyin Added with OpenPinyinTools"
                 writesrtfile = []
                 with open(parsedir + "/" + i, mode="r", encoding="utf8") as readfile:                         
@@ -104,13 +108,17 @@ def main():
                             line = line[1:]
                         if line.rstrip('\n').isdigit():
                             if enchmo == 1:
-                                writesrtfile.append((writesrttime, writesrttextCN, writesrttextPY))
+                                if tranCN:
+                                    writesrtfile.append((writesrttime, writesrttextOC, writesrttextPY))
+                                else:
+                                    writesrtfile.append((writesrttime, writesrttextCN, writesrttextPY))
                             elif enchmo == 2:
                                 writesrtfile.append((writesrttime, writesrttextPY))
                             print(writesrttextCN, " → ", writesrttextPY)
                             writesrttime = False
                             writesrttextCN = ""
                             writesrttextPY = ""
+                            writesrttextOC = ""
                             
                         
                         #check for timestamp
@@ -136,6 +144,7 @@ def main():
                                         else:
                                             for row in dbcur.execute("SELECT * FROM dict WHERE " + chmode + " = '%s'" % teststr):
                                                 writesrttextPY = writesrttextPY + " " + re.sub(',.*$', '', re.sub('.*?:', '', decode_pinyin(row[2])))
+                                                writesrttextOC = writesrttextOC + " " + re.sub(',.*$', '', re.sub('.*?:', '', row[TCNSCN]))
                                                 rowvalid = True
                                                 break;
                                         
@@ -151,6 +160,7 @@ def main():
                                         break 
                                 if rowvalid == False:
                                     writesrttextPY = writesrttextPY + teststr
+                                    writesrttextOC = writesrttextOC + teststr
                                 
                                 basestr = basestr[len(teststr):]
                             
