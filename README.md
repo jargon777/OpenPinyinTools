@@ -4,6 +4,7 @@ This program is a personal program I am developing to put pinyin in subtitles.
 At the moment this is a very basic program. SRT files in /parse are automatically read. Output is automatically written to /write. Output is a little buggy as if there are multiple readings of a particular phrase/hanzi the first is automatically chosen. (e.g. 了 is always rendered as le if it doesn't occur as part of another word).
 
 Configuration can only be done by editing main.py. Comment or uncomment the variables you want set.
+
     enchmo = 1 #1 keeps original language
     #enchmo = 2 #2 keeps only pinyin
     chmode = "simp"
